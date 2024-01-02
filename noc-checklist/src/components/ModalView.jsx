@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState, useRef, useMemo } from 'react'
 import React from 'react';
 import Machines from './Machines';
 
-const ModalMachines = ({isOpen, isClose}) => {
+const ModalView = ({isOpen, isClose}) => {
 
   return (
     <>
@@ -37,9 +37,9 @@ const ModalMachines = ({isOpen, isClose}) => {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900 mb-5"
                   >
-                    <div className='flex justify-end w-full items-center py-3'>
-                        {/* <p className='font-semibold text-sm text-gray-800 ml-2'>NOCCHL0000000001</p> */}
-                        <button onClick={() => setOpenModalConfirm(true)} className='px-2 py-1 text-sm font-semibold text-white rounded bg-blue-400 hover:bg-blue-500 transition-colors duration-150'>Create</button>
+                    <div className='flex  w-max items-center py-3'>
+                        <button onClick={() => setOpenModalConfirm(true)} className='px-2 py-1 text-md font-semibold text-white rounded bg-green-400 hover:bg-green-500 transition-colors duration-150'>Confirm</button>
+                        <p className='font-semibold text-sm text-gray-800 ml-2'>NOCCHL0000000001</p>
                     </div>
                   </Dialog.Title>
                   <Machines/>
@@ -58,4 +58,4 @@ const ModalMachines = ({isOpen, isClose}) => {
 
  
 
-export default ModalMachines;
+export default ModalView;

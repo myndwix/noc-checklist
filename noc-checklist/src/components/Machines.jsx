@@ -460,13 +460,10 @@ function Machines() {
   return (
  
     <>
-          <div className='absolute flex flex-col justify-center items-start bottom-5 bg-white px-3 py-3 shadow-md'>
-            <button onClick={() => setOpenModalConfirm(true)} className='px-2 py-1 text-md font-semibold text-white rounded bg-blue-400 hover:bg-blue-500 transition-colors duration-150'>Confirm</button>
-            <p className='font-semibold text-sm text-gray-800 mt-2'>NOCCHL0000000001</p>
-          </div>
-      <div className='w-full h-screen bg-gray-100 p-4 overflow-y-auto'>
+      <div className='w-full bg-gray-100 p-4 overflow-y-auto'>
          
-        <div className='lg:w-9/12 mx-auto'>
+          
+        <div className=''>
 
           <span className='w-max px-2 bg-blue-500 flex items-center justify-center text-xl md:text-lg font-medium rounded-t-lg text-white'>Servers</span>
 

@@ -18,9 +18,9 @@ const Server = ({id, name, cssclass, modalStateOpen}) => {
             <span className='p-[0.2rem] rounded-full bg-red-500 absolute z-10 right-2 text-xs text-white'>1234</span>
             <DropDown winHeight={window.innerHeight}/>
           </div>
-          <div className='w-60 hidden md:flex'>
+          {/* <div className='w-60 hidden md:flex'>
             <p className='text-xs font-medium text-gray-700'>All good!</p>
-          </div>
+          </div> */}
         </div>
 
       </div>

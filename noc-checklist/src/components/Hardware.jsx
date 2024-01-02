@@ -28,8 +28,8 @@ const Hardware = ({serverId, hardwares, divheight, setCommentPosition}) => {
                 <span className='px-[0.2rem] py-[0.1rem] rounded-full bg-red-500 absolute z-10 right-2 text-xs text-white'>2</span>
                 <DropDown winHeight={divheight}/>
                 </div>
-                <div className='relative w-60 hidden md:flex' onClick={(e) => setCommentPosition({x:e.currentTarget.getBoundingClientRect().x, y:e.currentTarget.getBoundingClientRect().y})}>
-                    {/* <p className='text-xs font-medium text-gray-700 cursor-pointer'>All good!</p> */}
+                <div className='relative items-center w-60 hidden md:flex' onClick={(e) => setCommentPosition({x:e.currentTarget.getBoundingClientRect().x, y:e.currentTarget.getBoundingClientRect().y})}>
+                    <p className='text-xs font-medium text-gray-700 cursor-pointer mr-3'>All good!</p>
                     <Comments/>
                 </div>
             </div>

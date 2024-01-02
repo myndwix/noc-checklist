@@ -27,11 +27,11 @@ export default function Comments({winHeight}) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className={`absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${btnPosition<200? 'bottom-10': ''}`}>
+        <Menu.Items static className={`absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${btnPosition<200? 'bottom-10': ''}`}>
           <div className="py-1 px-2">
             <Menu.Item>
-              {({ active }) => (
-                <div>
+              {({ close }) => (
+                <div onClick={() => {}}>
 
                   <p className='bg-blue-400 text-white px-2 py-1 rounded mt-1 text-sm w-max'>Cable damaged</p>
                   <p className='bg-blue-400 text-white px-2 py-1 rounded mt-1 text-sm w-max'>Disconnected</p>

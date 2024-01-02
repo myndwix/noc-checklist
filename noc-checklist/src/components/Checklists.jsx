@@ -1,19 +1,25 @@
 import {React, useState} from 'react';
 import { Outlet, Link } from "react-router-dom";
 import ModalMachines from './ModalMachines';
+import ModalView from './ModalView';
+import {EyeIcon} from '@heroicons/react/24/solid'
 
-const people = [
-    { name: 'NOCCHL0000000001', title: '24/10/2023', email: '09:45', role: 'Approved' },
-    { name: 'NOCCHL0000000002', title: '25/10/2023', email: '10:04', role: 'Approved' },
-    { name: 'NOCCHL0000000003', title: '26/10/2023', email: '09:39', role: 'Pending' },
-    // More people...
+const checklist = [
+    { checklistno: 'NOCCHL0000000001', date: '24/10/2023', time: '09:45', status: 'Approved' },
+    { checklistno: 'NOCCHL0000000002', date: '25/10/2023', time: '10:04', status: 'Approved' },
+    { checklistno: 'NOCCHL0000000003', date: '26/10/2023', time: '09:39', status: 'Pending' },
+    // More checklist...
   ]
 
 const Checklists = () => {
 
     let [modelOpen, setModelOpen] = useState(false);
+    let [modelViewOpen, setModelViewOpen] = useState(false);
     function closeModel(){
         setModelOpen(false);
+    }
+    function closeModelView(){
+        setModelViewOpen(false);
     }
 
     return (
@@ -47,18 +53,20 @@ const Checklists = () => {
                             </tr>
                         </thead>
                         <tbody className="bg-white">
-                            {people.map((person) => (
-                            <tr key={person.email} className="even:bg-gray-50">
+                            {checklist.map((person) => (
+                            <tr key={person.checklistno} className="even:bg-gray-50">
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                                {person.name}
+                                {person.checklistno}
                                 </td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.title}</td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.email}</td>
-                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.role}</td>
+                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.date}</td>
+                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{person.time}</td>
+                                <td className={`whitespace-nowrap px-3 py-4 text-sm text-white ${person.status==='Approved'?'bg-green-300': 'bg-orange-300'}`}>{person.status}</td>
                                 <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
-                                <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                                    View<span className="sr-only">, {person.name}</span>
+                                <a onClick={() => setModelViewOpen(true)} href="#" className="text-gray-600 hover:text-gray-900">
+                                <EyeIcon width={20}/>
+
                                 </a>
+
                                 </td>
                             </tr>
                             ))}
@@ -70,6 +78,7 @@ const Checklists = () => {
                 </div>
         </div>
         <ModalMachines isOpen={modelOpen} isClose={closeModel}/>
+        <ModalView isOpen={modelViewOpen} isClose={closeModelView}/>
 
         </div>
 
