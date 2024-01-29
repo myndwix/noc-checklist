@@ -9,7 +9,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Comments({winHeight, hardwareid, comment, checklistid, getComments}) {
+export default function CommentsView({winHeight, hardwareid, comment, checklistid}) {
     const [option, setOption] = useState('Comments');
     const [btnPosition, setBtnPosition] = useState(null);
     const [menuOpened, setMenuOpened] = useState(false);
@@ -17,12 +17,13 @@ export default function Comments({winHeight, hardwareid, comment, checklistid, g
     let [commentInputText, setCommentInputText] = useState(''); // this variable used to clear input field when comment post
     let commentBox = useRef();
   // if(Object.values(comment).filter(t=>t.hardwareid===hardwareid).length!==0)
-  function createComment(checklistId,hardwareId, comment){
-    getComments(checklistId,hardwareId, comment);
+
+  function createComment(comment){
+    axios.post('api/createcomment', {checklistid: checklistid, hardwareid: hardwareid, comment: comment}).then(() => console.log('saved')).catch((err) => console.log(err.message));
   }
 
-  useEffect(() => {}, [comment]);
-
+  // (Object.values(comment).filter(cm => cm.hardwareid===hardwareid)).map(m => console.log(m.comment))
+  if(Object.values(comment).filter(cm => cm.hardwareid===hardwareid).length>0)
   return (
     <Menu as="div" className="relative inline-block text-left mr-4">
       <div className=''>
@@ -42,14 +43,13 @@ export default function Comments({winHeight, hardwareid, comment, checklistid, g
       >
 
      
-       <Menu.Items className={`absolute right-0 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${btnPosition<200? 'bottom-10': ''}`}>
-       
-          <div className="pb-1 pt-3  px-2">
-            {(Object.values(comment).filter(cm => cm.hardwareid===hardwareid)).map((cmt,idx) => 
-                <Menu.Item key={idx}>
+       <Menu.Items className={`w-60 absolute right-0 mt-2 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${btnPosition<200? 'bottom-10': ''}`}>
+          <div className="pb-3 pt-3  px-2">
+            {(Object.values(comment).filter(cm => cm.hardwareid===hardwareid)).map(cmt => 
+                <Menu.Item key={cmt.commentid}>
                 {({close}) => (
                  <div className='flex items-center mt-1'>
-                    <p className='bg-blue-500 text-white rounded px-2 py-1  text-sm font-normal'>{cmt.comment}</p>
+                    <p className='bg-blue-500 text-white rounded px-2 py-1 text-sm font-normal'>{cmt.comment}</p>
                   </div>
                 )}
               </Menu.Item>
@@ -57,23 +57,17 @@ export default function Comments({winHeight, hardwareid, comment, checklistid, g
           
            
             
-            <Menu.Item>
+            {/* <Menu.Item>
               {({close}) => (
                <div className='flex items-center mt-2'>
 
-                  <input 
-                  value={commentInputText} 
-                  ref={commentBox} 
-                  onKeyDown={(e) => e.stopPropagation()} onClick={(e) => e.preventDefault()} 
-                  onChange={(e) => {setCommentInput(e.currentTarget.value); setCommentInputText(e.currentTarget.value);}} 
-                  className='w-60 px-2 py-1 ring-1 ring-gray-300 my-2 text-sm font-normal outline-none rounded' type="text" placeholder='Enter comment'/>
-                  <button className='flex items-center z-50 py-1 ml-2 rounded text-blue-500 hover:text-blue-600 transition-colors duration-150' 
-                  onClick={(e) => {e.preventDefault(); createComment(hardwareid, commentInput); setCommentInputText('')}}>
+                  <input value={commentInputText} ref={commentBox} onKeyDown={(e) => e.stopPropagation()} onClick={(e) => e.preventDefault()} onChange={(e) => {setCommentInput(e.currentTarget.value); setCommentInputText(e.currentTarget.value);}} className='w-60 px-2 py-1 ring-1 ring-gray-300 my-2 text-sm font-normal outline-none rounded' type="text" placeholder='Enter comment'/>
+                  <button className='flex items-center z-50 py-1 ml-2 rounded text-blue-500 hover:text-blue-600 transition-colors duration-150' onClick={(e) => {e.preventDefault(); createComment(commentInput); setCommentInputText('')}}>
                     <PaperAirplaneIcon className='w-7 ml-1'/>
                     </button>
                 </div>
               )}
-            </Menu.Item>
+            </Menu.Item> */}
             
               
           </div>
@@ -81,4 +75,6 @@ export default function Comments({winHeight, hardwareid, comment, checklistid, g
         </Transition>
     </Menu>
   )
+
+  return(<></>)
 }

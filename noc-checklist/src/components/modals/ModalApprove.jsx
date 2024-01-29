@@ -1,13 +1,21 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useState, useRef, useMemo } from 'react'
 import React from 'react';
-import Machines from './Machines';
+import axios from 'axios';
 
-const ModalView = ({isOpen, isClose}) => {
+const ModalApprove = ({isOpens, isClose, checklistId, getChecklists}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  function Loading(){
+    setIsLoading(true);
+    axios.post('api/approvechecklist', {checklistid: checklistId}).then(response => {
+        setTimeout(() => {setIsLoading(false); isClose(); getChecklists()},1000);
+    }).catch(err => console.log(err.message))
+    
+  }
 
   return (
     <>
-      <Transition appear show={isOpen} as={Fragment}>
+      <Transition appear show={isOpens} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={() => isClose()}>
           <Transition.Child
             as={Fragment}
@@ -22,7 +30,7 @@ const ModalView = ({isOpen, isClose}) => {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex items-center justify-center p-4 text-center">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -32,17 +40,17 @@ const ModalView = ({isOpen, isClose}) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="lg:w-9/12 mx-auto overflow-hidden transform rounded-2xl bg-gray-100 p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-1/4 max-w-4xl overflow-hidden transform rounded-2xl bg-gray-100 p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900 mb-5"
                   >
-                    <div className='flex  w-max items-center py-3'>
-                        <button onClick={() => setOpenModalConfirm(true)} className='px-2 py-1 text-md font-semibold text-white rounded bg-green-400 hover:bg-green-500 transition-colors duration-150'>Confirm</button>
-                        <p className='font-semibold text-sm text-gray-800 ml-2'>NOCCHL0000000001</p>
-                    </div>
+                    Are you sure?
                   </Dialog.Title>
-                  <Machines/>
+                  <div className='w-full'>
+                     <button onClick={() => {Loading();}} className='bg-green-200 px-4 py-2 rounded text-green-700 font-normal hover:bg-green-300 transition-all duration-150'>{isLoading ? 'Approving..' : 'Yes'}</button>
+                     <button onClick={() => isClose()} className='bg-gray-200 px-4 py-2 ml-2 rounded text-gray-700 font-normal hover:bg-gray-300 transition-colors duration-150'>Cancel</button>
+                  </div>
 
                   
                 </Dialog.Panel>
@@ -58,4 +66,4 @@ const ModalView = ({isOpen, isClose}) => {
 
  
 
-export default ModalView;
+export default ModalApprove;

@@ -1,20 +1,18 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useState, useRef, useMemo } from 'react'
 import React from 'react';
-import Hardware from './Hardware';
-import Comments from './Comments';
 
-const Modal = ({isOpenP, modalStateClose, serverId, serverName, hardwares}) => {
-  let [dHeight, setDHeight] = useState(0);
-  let divHeight = useRef(0);
-  let [commentPosition, setCommentPosition] = useState({x:0, y:0});
+const ModalConfirm = ({isOpens, isClose, createNewChecklist, getChecklists}) => {
+  const [isLoading, setIsLoading] = useState(false);
+  function Loading(){
+    setIsLoading(true);
+    setTimeout(() => {setIsLoading(false); isClose(); getChecklists()},1000)
+  }
 
-console.log(commentPosition)
-  // console.log('Heyigt' + divHeight.current.clientHeight)
   return (
     <>
-      <Transition appear show={isOpenP} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={() => modalStateClose()}>
+      <Transition appear show={isOpens} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={() => isClose()}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -27,7 +25,7 @@ console.log(commentPosition)
             <div className="fixed inset-0 bg-black/25 backdrop-blur-sm" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto" onClick={() => setDHeight(divHeight.current.getBoundingClientRect().height)}>
+          <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
@@ -38,17 +36,16 @@ console.log(commentPosition)
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-4xl overflow-hidden transform rounded-2xl bg-gray-100 p-6 text-left align-middle shadow-xl transition-all" ref={divHeight}>
+                <Dialog.Panel className="w-1/4 max-w-4xl min-w-max overflow-hidden transform rounded-2xl bg-gray-100 p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900 mb-5"
                   >
-                    {serverName}
+                    Are you sure?
                   </Dialog.Title>
-                  <div className='w-full '>
-
-                     <Hardware serverId={serverId} hardwares={hardwares} divheight={dHeight} setCommentPosition={setCommentPosition}/>
-
+                  <div className='w-full'>
+                     <button onClick={() => {createNewChecklist(); Loading();}} className='bg-blue-200 px-3 py-2 rounded text-blue-700 font-normal hover:bg-blue-300 transition-colors duration-150'>{isLoading ? 'Saving..' : 'Yes'}</button>
+                     <button onClick={() => isClose()} className='bg-gray-200 px-3 py-2 ml-1 rounded text-gray-700 font-normal hover:bg-gray-300 transition-colors duration-150'>No</button>
                   </div>
 
                   
@@ -65,4 +62,4 @@ console.log(commentPosition)
 
  
 
-export default Modal;
+export default ModalConfirm;

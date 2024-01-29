@@ -6,9 +6,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example({winHeight}) {
-    const [option, setOption] = useState('OK');
+export default function Example({winHeight, hardwarestatus, updateHardwares, hardwareid}) {
+    const [option, setOption] = useState('');
     const [btnPosition, setBtnPosition] = useState(null);
+
+    useEffect(() => {setOption(hardwarestatus===2 ? 'Warning' : hardwarestatus===3 ? 'Fault' : 'OK');},[]);
  
   return (
     <Menu as="div" className="relative inline-block text-left mr-4">
@@ -32,7 +34,7 @@ export default function Example({winHeight}) {
           <div className="py-1">
             <Menu.Item>
               {({ active }) => (
-                <a onClick={() => setOption('OK')}
+                <a onClick={() => {setOption('OK'); updateHardwares(hardwareid,1);}}
                   href="#"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -46,7 +48,7 @@ export default function Example({winHeight}) {
             <Menu.Item>
               {({ active }) => (
                 <a
-                onClick={() => setOption('Warning')}
+                onClick={() => {setOption('Warning'); updateHardwares(hardwareid,2);}}
                   href="#"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -60,7 +62,7 @@ export default function Example({winHeight}) {
             <Menu.Item>
               {({ active }) => (
                 <a
-                onClick={() => setOption('Fault')}
+                onClick={() => {setOption('Fault'); updateHardwares(hardwareid,3);}}
                   href="#"
                   className={classNames(
                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',

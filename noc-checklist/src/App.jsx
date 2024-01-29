@@ -7,6 +7,7 @@ import {Route, Routes} from 'react-router-dom';
 // import ModalConfirm from './components/ModalConfirm';
 import Machines from './components/Machines'
 import Checklists from './components/Checklists';
+import Login from './components/Login'
 import './App.css'
 
 
@@ -34,7 +35,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path='/' element={<Machines/>}/>
+      <Route path='/' element={<Login/>}/>
       <Route path='/checklist' element={<Checklists/>}/>
     </Routes>
     // <>
